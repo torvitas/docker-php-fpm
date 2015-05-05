@@ -39,4 +39,5 @@ RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/p
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY log.ini /usr/local/etc/php/conf.d/log.ini
 RUN mkdir /usr/local/etc/php-fpm.d/
