@@ -28,7 +28,7 @@ RUN cd /tmp/ && \
     mv xdebug-2.3.2 /usr/src/php/ext/xdebug
 
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
-RUN docker-php-ext-install apc memcache mysqli iconv mcrypt mbstring zip soap mysql bcmath pdo_mysql xdebug
+RUN docker-php-ext-install apc memcache mysqli iconv mcrypt mbstring zip soap mysql bcmath pdo_mysql xdebug gd
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
