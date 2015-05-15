@@ -12,17 +12,6 @@ RUN cd /tmp/ && \
 
 RUN apt-get update && apt-get install zlib1g-dev libpng12-dev libjpeg-dev re2c libmcrypt-dev libxml2-dev -y --no-install-recommends && rm -r /var/lib/apt/lists/*
 
-RUN cd /usr/src/php/ext/gd && \
-    /usr/local/bin/phpize && \
-    ./configure --with-php-config=/usr/local/bin/php-config \
-        --enable-gd \
-        --with-jpeg-dir \
-        --with-png-dir && \
-    make && \
-    cp modules/* /usr/local/lib/php/extensions/ && \
-    touch /usr/local/etc/php/conf.d/gd.ini && \
-    echo 'extension=/usr/local/lib/php/extensions/gd.so' > /usr/local/etc/php/conf.d/gd.ini
-
 RUN cd /tmp/ && \
     curl -O http://pecl.php.net/get/memcache-2.2.7.tgz && \
     tar zxvf memcache-2.2.7.tgz && \
@@ -33,11 +22,17 @@ RUN cd /tmp/ && \
     tar zxvf APC-3.1.13.tgz && \
     mv APC-3.1.13 /usr/src/php/ext/apc
 
-RUN docker-php-ext-install apc memcache mysqli iconv mcrypt mbstring zip soap mysql bcmath pdo_mysql
+RUN cd /tmp/ && \
+    curl -O https://pecl.php.net/get/xdebug-2.3.2.tgz && \
+    tar zxvf xdebug-2.3.2.tgz && \
+    mv xdebug-2.3.2 /usr/src/php/ext/xdebug
+
+RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
+RUN docker-php-ext-install apc memcache mysqli iconv mcrypt mbstring zip soap mysql bcmath pdo_mysql xdebug
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY xdebug.ini /usr/local/etc/php/conf.d/ext-xdebug.ini
 COPY log.ini /usr/local/etc/php/conf.d/log.ini
 RUN mkdir /usr/local/etc/php-fpm.d/
