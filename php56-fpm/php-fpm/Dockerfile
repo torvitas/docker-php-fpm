@@ -19,7 +19,7 @@ RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xd
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+COPY zzz_xdebug.ini /usr/local/etc/php/conf.d/zzz_xdebug.ini
 COPY date.ini /usr/local/etc/php/conf.d/date.ini
 COPY log.ini /usr/local/etc/php/conf.d/log.ini
 RUN mkdir /usr/local/etc/php-fpm.d/
