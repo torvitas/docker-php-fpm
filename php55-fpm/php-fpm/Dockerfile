@@ -22,8 +22,13 @@ RUN cd /tmp/ && \
     tar zxvf xdebug-2.3.2.tgz && \
     mv xdebug-2.3.2 /usr/src/php/ext/xdebug
 
+RUN cd /tmp/ && \
+    curl -O https://pecl.php.net/get/xhprof-0.9.4.tgz && \
+    tar zxvf xhprof-0.9.4.tgz && \
+    mv xhprof-0.9.4/extension /usr/src/php/ext/xhprof
+
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
-RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd
+RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof
 RUN echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so" > /usr/local/etc/php/conf.d/ext-xdebug.ini
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
