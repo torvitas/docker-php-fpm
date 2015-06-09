@@ -40,6 +40,7 @@ RUN cd /tmp/ && \
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
 RUN docker-php-ext-install apc memcache mysqli iconv mcrypt mbstring zip soap mysql bcmath pdo_mysql xdebug gd xhprof mongo
 
+RUN echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20100525/xdebug.so" > /usr/local/etc/php/conf.d/ext-xdebug.ini
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
