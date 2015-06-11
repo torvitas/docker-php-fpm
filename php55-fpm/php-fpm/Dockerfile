@@ -9,7 +9,7 @@ RUN cd /tmp/ && \
     mkdir -p /usr/local/lib/php/extensions/ && \
     cp ioncube/ioncube_loader_lin_5.5.so /usr/local/lib/php/extensions/ioncube.so && \
     rm -rf ioncube && \
-    touch /usr/local/etc/php/conf.d/ext-ioncube.ini && \
+    touch /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini && \
     echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
 
 RUN cd /tmp/ && \
