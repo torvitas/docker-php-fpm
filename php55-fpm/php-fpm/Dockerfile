@@ -34,7 +34,6 @@ RUN cd /tmp/ && \
 
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
 RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof mongo
-RUN echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20121212/xdebug.so" > /usr/local/etc/php/conf.d/ext-xdebug.ini
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
