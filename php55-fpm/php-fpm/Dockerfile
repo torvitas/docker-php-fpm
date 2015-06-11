@@ -10,7 +10,7 @@ RUN cd /tmp/ && \
     cp ioncube/ioncube_loader_lin_5.5.so /usr/local/lib/php/extensions/ioncube.so && \
     rm -rf ioncube && \
     touch /usr/local/etc/php/conf.d/ext-ioncube.ini && \
-    echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/ext-ioncube.ini
+    echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
 
 RUN cd /tmp/ && \
     curl -O http://pecl.php.net/get/memcache-2.2.7.tgz && \
