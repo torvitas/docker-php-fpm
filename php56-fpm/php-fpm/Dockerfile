@@ -4,6 +4,15 @@ MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 RUN apt-get update && apt-get install -y libssl-dev libpng12-dev libjpeg-dev re2c libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp/ && \
+    curl -O http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
+    tar zxvf ioncube_loaders_lin_x86-64.tar.gz && \
+    mkdir -p /usr/local/lib/php/extensions/ && \
+    cp ioncube/ioncube_loader_lin_5.5.so /usr/local/lib/php/extensions/ioncube.so && \
+    rm -rf ioncube && \
+    touch /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini && \
+    echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
+
+RUN cd /tmp/ && \
     curl -O http://pecl.php.net/get/memcache-2.2.7.tgz && \
     tar zxvf memcache-2.2.7.tgz && \
     mv memcache-2.2.7 /usr/src/php/ext/memcache
