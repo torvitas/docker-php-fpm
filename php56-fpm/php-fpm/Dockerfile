@@ -7,7 +7,7 @@ RUN cd /tmp/ && \
     curl -O http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
     tar zxvf ioncube_loaders_lin_x86-64.tar.gz && \
     mkdir -p /usr/local/lib/php/extensions/ && \
-    cp ioncube/ioncube_loader_lin_5.5.so /usr/local/lib/php/extensions/ioncube.so && \
+    cp ioncube/ioncube_loader_lin_5.6.so /usr/local/lib/php/extensions/ioncube.so && \
     rm -rf ioncube && \
     touch /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini && \
     echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
@@ -38,7 +38,7 @@ RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xd
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
-COPY zzz_xdebug.ini /usr/local/etc/php/conf.d/zzz_xdebug.ini
-COPY date.ini /usr/local/etc/php/conf.d/date.ini
-COPY log.ini /usr/local/etc/php/conf.d/log.ini
+COPY fpm/ /usr/local/etc/php/fpm/pool.d/
+COPY php/ /usr/local/etc/php/conf.d/
 RUN mkdir /usr/local/etc/php-fpm.d/
+RUN touch /usr/local/etc/php-fpm.d/default.conf
