@@ -1,7 +1,7 @@
 FROM php:5.6-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
-RUN apt-get update && apt-get install -y libssl-dev libpng12-dev libjpeg-dev re2c libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y libssl-dev libpng12-dev libjpeg-dev re2c libfreetype6-dev libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp/ && \
     curl -O http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
@@ -32,7 +32,7 @@ RUN cd /tmp/ && \
     tar zxvf mongo-1.6.8.tgz && \
     mv mongo-1.6.8 /usr/src/php/ext/mongo
 
-RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir
+RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
 RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof mongo
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
