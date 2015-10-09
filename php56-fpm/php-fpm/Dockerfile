@@ -1,6 +1,15 @@
 FROM php:5.6-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
+RUN cd /tmp/ && \
+    curl -O http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz && \
+    tar zxvf zend-loader-php5.6-linux-x86_64.tar.gz && \
+    cd zend-loader-php5.6-linux-x86_64/ && \
+    mkdir -p /usr/local/lib/php/extensions/ && \
+    cp * /usr/local/lib/php/extensions/ && \
+    touch /usr/local/etc/php/conf.d/zend_guard_loader.ini && \
+    echo 'extension=/usr/local/lib/php/extensions/ZendGuardLoader.so' > /usr/local/etc/php/conf.d/zend_guard_loader.ini
+
 RUN apt-get update && apt-get install -y libssl-dev libpng12-dev libjpeg-dev re2c libfreetype6-dev libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp/ && \
