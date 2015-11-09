@@ -8,7 +8,7 @@ RUN cd /tmp/ && \
     mkdir -p /usr/local/lib/php/extensions/ && \
     cp * /usr/local/lib/php/extensions/ && \
     touch /usr/local/etc/php/conf.d/zend_guard_loader.ini && \
-    echo 'extension=/usr/local/lib/php/extensions/ZendGuardLoader.so' > /usr/local/etc/php/conf.d/zend_guard_loader.ini
+    echo 'zend_extension=/usr/local/lib/php/extensions/ZendGuardLoader.so' > /usr/local/etc/php/conf.d/zend_guard_loader.ini
 
 RUN apt-get update && apt-get install libssl-dev zlib1g-dev libpng12-dev libjpeg-dev re2c libmcrypt-dev libxml2-dev libmemcached-dev -y --no-install-recommends && rm -r /var/lib/apt/lists/*
 
