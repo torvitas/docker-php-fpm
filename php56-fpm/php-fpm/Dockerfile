@@ -47,7 +47,7 @@ RUN cd /tmp/ && \
     mv memcached-2.2.0 /usr/src/php/ext/memcached
 
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
-RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof mongo memcached
+RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof mongo memcached opcache
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
