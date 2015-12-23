@@ -1,7 +1,7 @@
 FROM php:5.6-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
-RUN apt-get update && apt-get install -y libmemcached-dev libssl-dev libpng12-dev libjpeg-dev re2c libfreetype6-dev libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openssh-client sudo git libmemcached-dev libssl-dev libpng12-dev libjpeg-dev re2c libfreetype6-dev libmcrypt-dev libxml2-dev --no-install-recommends && rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp/ && \
     curl -O http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz && \
@@ -56,3 +56,12 @@ COPY fpm/ /usr/local/etc/php/fpm/pool.d/
 COPY php/ /usr/local/etc/php/conf.d/
 RUN mkdir /usr/local/etc/php-fpm.d/
 RUN touch /usr/local/etc/php-fpm.d/default.conf
+
+RUN useradd -mu 1000 developer
+RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+COPY entrypoint.sh /usr/local/bin/
+COPY entrypoint.functions.sh /usr/local/etc/
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]
+CMD ["php-fpm"]
