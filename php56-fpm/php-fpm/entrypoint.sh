@@ -1,16 +1,14 @@
 #!/bin/bash
 
-su -c 'mkdir -p /usr/local/lib/composer'
-su -c 'chown developer.developer /usr/local/lib/composer'
-su -c 'mkdir -p /tmp/composer/cache'
-su -c 'chown developer.developer /tmp/composer/cache'
 export COMPOSER_HOME=${COMPOSER_HOME:-/usr/local/lib/composer/}
-export COMPOSER_BIN_DIR=${COMPOSER_BIN_DIR:-/usr/local/bin/}
+export COMPOSER_BIN_DIR=${COMPOSER_BIN_DIR:-}
 export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-/tmp/composer/cache/}
 export COMPOSER_NO_INTERACTION=${COMPOSER_NO_INTERACTION:-1}
+export PATH=${PATH}:/usr/local/lib/composer/bin
 
 cd /var/www/html/
 . /usr/local/etc/entrypoint.functions.sh
+setComposerPermission
 
 if [ -f /usr/local/bin/entrypoint.before.sh ]; then
 	. /usr/local/bin/entrypoint.before.sh

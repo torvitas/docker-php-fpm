@@ -15,6 +15,7 @@ function generateSshKeyIfMissing()
 function composerCreate()
 {
     disableXDebug
+    setComposerPermission
     su developer -pc "composer create-project --no-dev"
     enableXDebug
 }
@@ -22,6 +23,7 @@ function composerCreate()
 function composerUp()
 {
     disableXDebug
+    setComposerPermission
     su developer -pc "composer up --no-dev"
     enableXDebug
 }
@@ -29,8 +31,19 @@ function composerUp()
 function composerUpDev()
 {
     disableXDebug
+    setComposerPermission
     su developer -pc "composer up"
     enableXDebug
+}
+
+function setComposerPermission()
+{
+    mkdir -p /usr/local/lib/composer
+    chown developer.developer -R /usr/local/lib/composer
+    chmod g+rwxs -R /usr/local/lib/composer
+    mkdir -p /tmp/composer/cache
+    chown developer.developer -R /tmp/composer/cache
+    chmod g+rwxs -R /tmp/composer/cache
 }
 
 function disableXDebug()
