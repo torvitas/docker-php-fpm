@@ -1,7 +1,7 @@
 #!/bin/bash
 
-su developer -pc 'mkdir -p /tmp/.composer'
-export COMPOSER_HOME=${COMPOSER_HOME:-/tmp/.composer/}
+su developer -pc 'mkdir -p /usr/local/lib/composer'
+export COMPOSER_HOME=${COMPOSER_HOME:-/usr/local/lib/composer/}
 export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-}
 export COMPOSER_NO_INTERACTION=${COMPOSER_NO_INTERACTION:-1}
 
