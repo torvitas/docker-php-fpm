@@ -26,6 +26,13 @@ function composerUp()
     enableXDebug
 }
 
+function composerUpDev()
+{
+    disableXDebug
+    su developer -pc "composer up"
+    enableXDebug
+}
+
 function disableXDebug()
 {
     local xDebugIniPath=$(getXDebugIniPath)

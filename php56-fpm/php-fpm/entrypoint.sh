@@ -26,6 +26,10 @@ case ${1} in
         composerUp
         exit 0
         ;;
+    composer:up:dev)
+        composerUpDev
+        exit 0
+        ;;
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then
