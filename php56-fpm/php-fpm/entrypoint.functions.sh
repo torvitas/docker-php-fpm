@@ -3,6 +3,7 @@
 function generateSshKeyIfMissing()
 {
     chmod 700 -R /home/developer/.ssh
+    chown developer.developer -R /home/developer/.ssh
     su developer -c '
         if [ ! -f ~/.ssh/id_rsa ]; then
           mkdir -p ~/.ssh
