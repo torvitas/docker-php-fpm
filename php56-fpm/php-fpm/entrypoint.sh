@@ -15,7 +15,7 @@ if [ -f /usr/local/bin/entrypoint.before.sh ]; then
 fi
 
 generateSshKeyIfMissing
-if [ ! -f /var/www/html/composer.lock ]; then
+if [ -f /var/www/html/composer.json ] && [ ! -f /var/www/html/composer.lock ]; then
 	composerCreate
 fi
 
