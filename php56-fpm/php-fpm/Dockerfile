@@ -65,6 +65,11 @@ RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xd
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
+ENV COMPOSER_HOME=/usr/local/lib/composer/
+ENV COMPOSER_CACHE_DIR=/tmp/composer/cache/
+ENV COMPOSER_BIN_DIR=/usr/local/lib/composer/bin/
+ENV PATH=${PATH}:/usr/local/lib/composer/bin
+
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
 COPY php/ /usr/local/etc/php/conf.d/
@@ -73,6 +78,7 @@ RUN touch /usr/local/etc/php-fpm.d/default.conf
 
 RUN useradd -mu 1000 developer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
+RUN composer global require "phpunit/phpunit=5.1.*"
 COPY entrypoint.sh /usr/local/bin/
 COPY entrypoint.functions.sh /usr/local/etc/
 RUN chmod +x /usr/local/bin/entrypoint.sh
