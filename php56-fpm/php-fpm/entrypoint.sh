@@ -21,14 +21,17 @@ fi
 
 case ${1} in
     composer:create)
+        set -e
         composerCreate
         exit 0
         ;;
     composer:up)
+        set -e
         composerUp
         exit 0
         ;;
     composer:up:dev)
+        set -e
         composerUpDev
         exit 0
         ;;
