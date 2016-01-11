@@ -78,9 +78,12 @@ RUN touch /usr/local/etc/php-fpm.d/default.conf
 
 RUN useradd -mu 1000 developer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
-RUN composer global require "phpunit/phpunit=5.1.*"
 COPY entrypoint.sh /usr/local/bin/
 COPY entrypoint.functions.sh /usr/local/etc/
+RUN bash -c "source /usr/local/etc/entrypoint.functions.sh && \
+    disableXDebug && \
+    composer global require codeception/codeception:2.1.* && \
+    enableXDebug"
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]
