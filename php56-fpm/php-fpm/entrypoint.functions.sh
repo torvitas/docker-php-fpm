@@ -88,6 +88,7 @@ function phpCodeSniff()
 {
     standard=${1:-PSR2}
     folder=${2:-./}
+    mkdir -p /usr/local/etc/phpcs/lists/
     touch /usr/local/etc/phpcs/lists/blacklist
     files=$(find ./${folder} -type f | grep -vf /usr/local/etc/phpcs/lists/blacklist | grep .php)
     disableXDebug
