@@ -71,3 +71,26 @@ function getXDebugIniBackupPath()
     local xDebugIniBackupPath='/usr/local/etc/php/docker-php-ext-xdebug.ini'
     echo $xDebugIniBackupPath
 }
+
+function filteredPhpCodeSniffer()
+{
+    whitelist=/usr/local/etc/phpcs/lists/whitelist
+    if [ ! -f ${whitelist} ]; then
+        phpCodeSniff ${1}
+    fi
+    while read folder; do
+        echo sniffing in ${folder}
+        phpCodeSniff ${1} ${folder}
+    done < ${whitelist}
+}
+
+function phpCodeSniff()
+{
+    standard=${1:-PSR2}
+    folder=${2:-./}
+    touch /usr/local/etc/phpcs/lists/blacklist
+    files=$(find ./${folder} -type f | grep -vf /usr/local/etc/phpcs/lists/blacklist)
+    disableXDebug
+    phpcs --standard=${standard} ${files}
+    enableXDebug
+}

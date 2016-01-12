@@ -15,9 +15,6 @@ if [ -f /usr/local/bin/entrypoint.before.sh ]; then
 fi
 
 generateSshKeyIfMissing
-if [ -f /var/www/html/composer.json ] && [ ! -f /var/www/html/composer.lock ]; then
-	composerCreate
-fi
 
 case ${1} in
     composer:create)
@@ -33,6 +30,11 @@ case ${1} in
     composer:up:dev)
         set -e
         composerUpDev
+        exit 0
+        ;;
+    phpcs:psr2)
+        set -e
+        filteredPhpCodeSniffer PSR2
         exit 0
         ;;
 esac
