@@ -89,7 +89,7 @@ function phpCodeSniff()
     standard=${1:-PSR2}
     folder=${2:-./}
     touch /usr/local/etc/phpcs/lists/blacklist
-    files=$(find ./${folder} -type f | grep -vf /usr/local/etc/phpcs/lists/blacklist)
+    files=$(find ./${folder} -type f | grep -vf /usr/local/etc/phpcs/lists/blacklist | grep .php)
     disableXDebug
     phpcs --standard=${standard} ${files}
     enableXDebug
