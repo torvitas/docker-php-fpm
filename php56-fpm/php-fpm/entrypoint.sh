@@ -44,7 +44,7 @@ case ${1} in
         ;;
     phpcs:typo3cms)
         set -e
-        filteredPhpCodeSniffer TYPO3CMS
+        filteredPhpCodeSniffer typo3sniffpool
         exit 0
         ;;
 esac
