@@ -82,7 +82,7 @@ COPY entrypoint.sh /usr/local/bin/
 COPY entrypoint.functions.sh /usr/local/etc/
 RUN bash -c "source /usr/local/etc/entrypoint.functions.sh && \
     disableXDebug && \
-    composer global require codeception/codeception:2.1.* && \
+    composer global require codeception/codeception:~2.1 squizlabs/php_codesniffer:~2.5 && \
     enableXDebug"
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
