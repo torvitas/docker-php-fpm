@@ -37,6 +37,11 @@ case ${1} in
         filteredPhpCodeSniffer PSR2
         exit 0
         ;;
+    phpcs:oxid)
+        set -e
+        filteredPhpCodeSniffer Oxid
+        exit 0
+        ;;
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then

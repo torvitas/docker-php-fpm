@@ -82,9 +82,14 @@ COPY entrypoint.sh /usr/local/bin/
 COPY entrypoint.functions.sh /usr/local/etc/
 RUN bash -c "source /usr/local/etc/entrypoint.functions.sh && \
     disableXDebug && \
-    composer global require codeception/codeception:~2.1 squizlabs/php_codesniffer:~2.5 && \
+    composer global config repositories.oxidesales vcs https://github.com/torvitas/coding_standards.git && \
+    composer global require codeception/codeception:~2.1 \
+                            squizlabs/php_codesniffer:~2.5 \
+                            oxid-esales/coding-standards:~2.0 && \
     enableXDebug"
 RUN phpcs --config-set ignore_warnings_on_exit 1
+RUN phpcs --config-set show_progress 1
+RUN phpcs --config-set default_standard PSR2
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]
