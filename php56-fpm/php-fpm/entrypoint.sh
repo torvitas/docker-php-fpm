@@ -42,11 +42,6 @@ case ${1} in
         filteredPhpCodeSniffer Oxid
         exit 0
         ;;
-    phpcs:typo3cms)
-        set -e
-        filteredPhpCodeSniffer typo3sniffpool
-        exit 0
-        ;;
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then
