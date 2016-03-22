@@ -42,6 +42,11 @@ case ${1} in
         filteredPhpCodeSniffer Oxid
         exit 0
         ;;
+    typo3:permission)
+        set -e
+        updateTypo3Permission
+        exit 0
+        ;;
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then

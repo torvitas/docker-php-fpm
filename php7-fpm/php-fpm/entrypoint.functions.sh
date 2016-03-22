@@ -95,3 +95,10 @@ function phpCodeSniff()
     phpcs --standard=${standard} ${files}
     enableXDebug
 }
+
+function updateTypo3Permission()
+{
+    echo '>> Setting file modes for TYPO3.'
+    chown developer.developer -R /var/www/html/typo3temp /var/www/html/fileadmin
+    chmod g+rwxs -R /var/www/html/typo3temp /var/www/html/fileadmin
+}

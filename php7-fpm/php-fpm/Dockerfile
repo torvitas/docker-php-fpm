@@ -77,6 +77,7 @@ RUN phpcs --config-set show_progress 1
 RUN phpcs --config-set default_standard PSR2
 RUN phpcs --config-set installed_paths /usr/local/lib/composer/vendor/oxid-esales/coding-standards/
 RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN gpasswd -a www-data developer
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]
 CMD ["php-fpm"]
