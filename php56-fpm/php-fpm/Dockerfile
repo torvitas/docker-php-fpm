@@ -17,6 +17,36 @@ RUN apt-get update && \
         libxml2-dev && \
     rm -r /var/lib/apt/lists/*
 
+RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
+RUN docker-php-ext-install gd
+RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install iconv
+RUN docker-php-ext-install mcrypt
+RUN docker-php-ext-install mbstring
+RUN docker-php-ext-install zip
+RUN docker-php-ext-install soap
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install opcache
+
+RUN cd /tmp/ && \
+    curl -O http://pecl.php.net/get/xdebug-2.3.2.tgz && \
+    tar zxvf xdebug-2.3.2.tgz && \
+    mv xdebug-2.3.2 /usr/src/php/ext/xdebug
+RUN docker-php-ext-install xdebug
+
+RUN cd /tmp/ && \
+    curl -O https://pecl.php.net/get/mongodb-1.1.5.tgz && \
+    tar zxvf mongodb-1.1.5.tgz && \
+    mv mongodb-1.1.5 /usr/src/php/ext/mongodb
+RUN docker-php-ext-install mongodb
+
+RUN cd /tmp/ && \
+    curl -O https://pecl.php.net/get/memcached-2.2.0.tgz && \
+    tar zxvf memcached-2.2.0.tgz && \
+    mv memcached-2.2.0 /usr/src/php/ext/memcached
+RUN docker-php-ext-install memcached
+
 RUN cd /tmp/ && \
     curl -O http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz && \
     tar zxvf zend-loader-php5.6-linux-x86_64.tar.gz && \
@@ -39,29 +69,13 @@ RUN cd /tmp/ && \
     curl -O http://pecl.php.net/get/memcache-2.2.7.tgz && \
     tar zxvf memcache-2.2.7.tgz && \
     mv memcache-2.2.7 /usr/src/php/ext/memcache
-
-RUN cd /tmp/ && \
-    curl -O http://pecl.php.net/get/xdebug-2.3.2.tgz && \
-    tar zxvf xdebug-2.3.2.tgz && \
-    mv xdebug-2.3.2 /usr/src/php/ext/xdebug
+RUN docker-php-ext-install memcache
 
 RUN cd /tmp/ && \
     curl -O https://pecl.php.net/get/xhprof-0.9.4.tgz && \
     tar zxvf xhprof-0.9.4.tgz && \
     mv xhprof-0.9.4/extension /usr/src/php/ext/xhprof
-
-RUN cd /tmp/ && \
-    curl -O https://pecl.php.net/get/mongo-1.6.8.tgz && \
-    tar zxvf mongo-1.6.8.tgz && \
-    mv mongo-1.6.8 /usr/src/php/ext/mongo
-
-RUN cd /tmp/ && \
-    curl -O https://pecl.php.net/get/memcached-2.2.0.tgz && \
-    tar zxvf memcached-2.2.0.tgz && \
-    mv memcached-2.2.0 /usr/src/php/ext/memcached
-
-RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
-RUN docker-php-ext-install mysqli iconv mcrypt mbstring zip soap mysql bcmath xdebug memcache pdo_mysql gd xhprof mongo memcached opcache
+RUN docker-php-ext-install xhprof
 
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
