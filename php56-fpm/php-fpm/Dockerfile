@@ -73,7 +73,7 @@ ENV PATH=${PATH}:/usr/local/lib/composer/bin
 COPY php-fpm.conf /usr/local/etc/php-fpm.conf
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
 COPY php/ /usr/local/etc/php/conf.d/
-RUN mkdir /usr/local/etc/php-fpm.d/
+RUN mkdir -p /usr/local/etc/php-fpm.d/
 RUN touch /usr/local/etc/php-fpm.d/default.conf
 
 RUN useradd -mu 1000 developer
