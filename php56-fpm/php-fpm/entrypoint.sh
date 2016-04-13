@@ -45,7 +45,7 @@ case ${1} in
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then
-	. /usr/local/bin/entrypoint.after.sh
+	. /usr/local/bin/entrypoint.after.sh $@
 fi
 
 exec "$@"
