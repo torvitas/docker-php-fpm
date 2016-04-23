@@ -48,6 +48,12 @@ RUN cd /tmp/ && \
     git checkout php7
 RUN docker-php-ext-install memcached
 
+RUN cd /tmp/ && \
+    git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
+    cd /usr/src/php/ext/redis && \
+    git checkout php7
+RUN docker-php-ext-install redis
+
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 ENV COMPOSER_HOME=/usr/local/lib/composer/
