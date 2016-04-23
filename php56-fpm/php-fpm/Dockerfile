@@ -20,6 +20,7 @@ RUN apt-get update && \
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
 RUN docker-php-ext-install gd
 RUN docker-php-ext-install mysqli
+RUN docker-php-ext-install mysql
 RUN docker-php-ext-install iconv
 RUN docker-php-ext-install mcrypt
 RUN docker-php-ext-install mbstring
