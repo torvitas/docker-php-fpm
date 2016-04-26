@@ -78,6 +78,8 @@ RUN cd /tmp/ && \
     mv xhprof-0.9.4/extension /usr/src/php/ext/xhprof
 RUN docker-php-ext-install xhprof
 
+RUN docker-php-ext-install pcntl
+
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 ENV COMPOSER_HOME=/usr/local/lib/composer/

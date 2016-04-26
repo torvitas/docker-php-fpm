@@ -54,6 +54,8 @@ RUN cd /tmp/ && \
     git checkout php7
 RUN docker-php-ext-install redis
 
+RUN docker-php-ext-install pcntl
+
 RUN mkdir /usr/local/lib/php/session && chown www-data.www-data /usr/local/lib/php/session
 
 ENV COMPOSER_HOME=/usr/local/lib/composer/
