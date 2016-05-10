@@ -96,13 +96,14 @@ RUN touch /usr/local/etc/php-fpm.d/default.conf
 RUN useradd -mu 1000 developer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 COPY entrypoint.sh /usr/local/bin/
-COPY entrypoint.functions.sh /usr/local/etc/
-RUN bash -c "source /usr/local/etc/entrypoint.functions.sh && \
+COPY entrypoint.xdebug.functions.sh /usr/local/etc/
+RUN bash -c "source /usr/local/etc/entrypoint.xdebug.functions.sh && \
     disableXDebug && \
     composer global config repositories.oxidesales vcs https://github.com/torvitas/coding_standards.git && \
     composer global require codeception/codeception:~2.1 \
                             squizlabs/php_codesniffer:~2.5 \
-                            oxid-esales/coding-standards:~2.0 && \
+                            oxid-esales/coding-standards:~2.0 \
+                            robmorgan/phinx:~0.5 && \
     enableXDebug"
 RUN phpcs --config-set ignore_warnings_on_exit 1
 RUN phpcs --config-set show_progress 1
@@ -111,6 +112,9 @@ RUN phpcs --config-set installed_paths /usr/local/lib/composer/vendor/oxid-esale
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 RUN echo PATH=${PATH} >> /home/developer/.profile
+RUN echo cd /var/www/html/ >> /home/developer/.profile
+
+COPY entrypoint.functions.sh /usr/local/etc/
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]

@@ -102,3 +102,9 @@ function updateTypo3Permission()
     chown developer.developer -R /var/www/html/typo3temp /var/www/html/fileadmin
     chmod g+rwxs -R /var/www/html/typo3temp /var/www/html/fileadmin
 }
+
+function gitClone()
+{
+    chmod -R 1000.1000 /var/www/html/
+    su developer -pc "git clone ${@:-${CI_BUILD_REPO}}"
+}

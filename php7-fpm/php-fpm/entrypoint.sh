@@ -47,6 +47,11 @@ case ${1} in
         updateTypo3Permission
         exit 0
         ;;
+    git:clone)
+        set -e
+        gitClone ${@:2}
+        exit 0
+        ;;
 esac
 
 if [ -f /usr/local/bin/entrypoint.after.sh ]; then

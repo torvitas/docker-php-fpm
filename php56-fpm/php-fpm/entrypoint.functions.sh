@@ -3,8 +3,8 @@
 function generateSshKeyIfMissing()
 {
     mkdir -p /home/developer/.ssh
-    chmod 700 -R /home/developer/.ssh
     chown developer.developer -R /home/developer/.ssh
+    chmod 700 -R /home/developer/.ssh
     su developer -c '
         if [ ! -f ~/.ssh/id_rsa ]; then
           ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
@@ -46,32 +46,6 @@ function setComposerPermission()
     chmod g+rwxs -R /tmp/composer/cache
 }
 
-function disableXDebug()
-{
-    local xDebugIniPath=$(getXDebugIniPath)
-    local xDebugIniBackupPath=$(getXDebugIniBackupPath)
-    mv $xDebugIniPath $xDebugIniBackupPath
-}
-
-function enableXDebug()
-{
-    local xDebugIniPath=$(getXDebugIniPath)
-    local xDebugIniBackupPath=$(getXDebugIniBackupPath)
-    mv $xDebugIniBackupPath $xDebugIniPath
-}
-
-function getXDebugIniPath()
-{
-    local xDebugIniPath='/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini'
-    echo $xDebugIniPath
-}
-
-function getXDebugIniBackupPath()
-{
-    local xDebugIniBackupPath='/usr/local/etc/php/docker-php-ext-xdebug.ini'
-    echo $xDebugIniBackupPath
-}
-
 function filteredPhpCodeSniffer()
 {
     whitelist=/usr/local/etc/phpcs/lists/whitelist
@@ -94,4 +68,25 @@ function phpCodeSniff()
     disableXDebug
     phpcs --standard=${standard} ${files}
     enableXDebug
+}
+
+function phinxMigrate()
+{
+    su developer -lc "phinx migrate --configuration ${PHINX_CONFIGURATION} ${@}"
+}
+
+function phinxCreateMigration()
+{
+    su developer -lc "phinx create --configuration ${PHINX_CONFIGURATION} ${@}"
+}
+
+function phinxInit()
+{
+    su developer -lc "phinx init ${@:-${PHINX_CONFIGURATION}}"
+}
+
+function gitClone()
+{
+    chmod -R 1000.1000 /var/www/html/
+    su developer -pc "git clone ${@:-${CI_BUILD_REPO}}"
 }
