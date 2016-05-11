@@ -93,7 +93,6 @@ COPY php/ /usr/local/etc/php/conf.d/
 RUN mkdir -p /usr/local/etc/php-fpm.d/
 RUN touch /usr/local/etc/php-fpm.d/default.conf
 
-RUN useradd -mu 1000 developer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 COPY entrypoint.sh /usr/local/bin/
 COPY entrypoint.xdebug.functions.sh /usr/local/etc/
@@ -103,7 +102,7 @@ RUN bash -c "source /usr/local/etc/entrypoint.xdebug.functions.sh && \
     composer global require codeception/codeception:~2.1 \
                             squizlabs/php_codesniffer:~2.5 \
                             oxid-esales/coding-standards:~2.0 \
-                            robmorgan/phinx:~0.5 && \
+                            robmorgan/phinx:~0.5.3 && \
     enableXDebug"
 RUN phpcs --config-set ignore_warnings_on_exit 1
 RUN phpcs --config-set show_progress 1
@@ -111,11 +110,11 @@ RUN phpcs --config-set default_standard PSR2
 RUN phpcs --config-set installed_paths /usr/local/lib/composer/vendor/oxid-esales/coding-standards/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-RUN echo PATH=${PATH} >> /home/developer/.profile
-RUN echo cd /var/www/html/ >> /home/developer/.profile
+RUN echo PATH=${PATH} >> /root/.profile
+RUN echo cd /var/www/html/ >> /root/.profile
 
 COPY entrypoint.functions.sh /usr/local/etc/
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-VOLUME ["/tmp/composer/cache", "/home/developer/.ssh"]
+VOLUME ["/tmp/composer/cache", "/root/.ssh"]
 CMD ["php-fpm"]

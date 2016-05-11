@@ -2,21 +2,18 @@
 
 function generateSshKeyIfMissing()
 {
-    mkdir -p /home/developer/.ssh
-    chown developer.developer -R /home/developer/.ssh
-    chmod 700 -R /home/developer/.ssh
-    su developer -c '
-        if [ ! -f ~/.ssh/id_rsa ]; then
-          ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-        fi
-    '
+    mkdir -p /root/.ssh
+    chmod 700 -R /root/.ssh
+    if [ ! -f ~/.ssh/id_rsa ]; then
+      ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
+    fi
 }
 
 function composerCreate()
 {
     disableXDebug
     setComposerPermission
-    su developer -pc "composer create-project --no-dev"
+    composer create-project --no-dev
     enableXDebug
 }
 
@@ -24,7 +21,7 @@ function composerUp()
 {
     disableXDebug
     setComposerPermission
-    su developer -pc "composer up --no-dev"
+    composer up --no-dev
     enableXDebug
 }
 
@@ -32,17 +29,15 @@ function composerUpDev()
 {
     disableXDebug
     setComposerPermission
-    su developer -pc "composer up"
+    composer up
     enableXDebug
 }
 
 function setComposerPermission()
 {
     mkdir -p /usr/local/lib/composer
-    chown developer.developer -R /usr/local/lib/composer
     chmod g+rwxs -R /usr/local/lib/composer
     mkdir -p /tmp/composer/cache
-    chown developer.developer -R /tmp/composer/cache
     chmod g+rwxs -R /tmp/composer/cache
 }
 
@@ -72,21 +67,20 @@ function phpCodeSniff()
 
 function phinxMigrate()
 {
-    su developer -lc "phinx migrate --configuration ${PHINX_CONFIGURATION} ${@}"
+    phinx migrate --configuration ${PHINX_CONFIGURATION} ${@}
 }
 
 function phinxCreateMigration()
 {
-    su developer -lc "phinx create --configuration ${PHINX_CONFIGURATION} ${@}"
+    phinx create --configuration ${PHINX_CONFIGURATION} ${@}
 }
 
 function phinxInit()
 {
-    su developer -lc "phinx init ${@:-${PHINX_CONFIGURATION}}"
+    phinx init ${@:-${PHINX_CONFIGURATION}}
 }
 
 function gitClone()
 {
-    chmod -R 1000.1000 /var/www/html/
-    su developer -pc "git clone ${@:-${CI_BUILD_REPO}}"
+    git clone ${@:-${CI_BUILD_REPO}}
 }
