@@ -8,6 +8,8 @@ export PATH=${PATH}:/usr/local/lib/composer/bin
 export MIGRATION_DIR=${MIGRATION_DIR:-/var/www/migrations/}
 export PHINX_CONFIGURATION=${PHINX_CONFIGURATION:-${MIGRATION_DIR}"phinx.yml"}
 
+update-ca-certificates
+
 cd /var/www/html/
 . /usr/local/etc/entrypoint.xdebug.functions.sh
 . /usr/local/etc/entrypoint.functions.sh
