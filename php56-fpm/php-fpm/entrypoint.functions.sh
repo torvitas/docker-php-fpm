@@ -5,6 +5,7 @@ function generateSshKeyIfMissing()
     mkdir -p /home/developer/.ssh
     chown developer.developer -R /home/developer/.ssh
     chmod 700 -R /home/developer/.ssh
+    chown developer.developer -R /home/developer/.ssh
     su developer -c '
         if [ ! -f ~/.ssh/id_rsa ]; then
           ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
