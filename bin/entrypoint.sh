@@ -7,6 +7,7 @@ export COMPOSER_BIN_DIR=${COMPOSER_BIN_DIR:-}
 export COMPOSER_CACHE_DIR=${COMPOSER_CACHE_DIR:-/tmp/composer/cache/}
 export COMPOSER_NO_INTERACTION=${COMPOSER_NO_INTERACTION:-1}
 export PATH=${PATH}:/usr/local/lib/composer/bin
+cmd=${@}
 
 WEB_USER_UID=${WEB_USER_UID:-"1000"}
 WEB_USER=${WEB_USER:-"web"}
@@ -51,4 +52,4 @@ case ${1} in
         php-fpm
 esac
 
-su ${WEB_USER} -c "${@}"
+su ${WEB_USER} -c "${cmd}"
