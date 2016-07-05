@@ -13,6 +13,7 @@ WEB_USER_UID=${WEB_USER_UID:-"1000"}
 WEB_USER=${WEB_USER:-"web"}
 useradd ${WEB_USER} -mu ${WEB_USER_UID}  > /dev/null 2>&1
 chown -R ${WEB_USER}.${WEB_USER} /home/${WEB_USER}
+gpasswd -a web superuser
 
 render /usr/local/templates/php-fpm.conf.template -- > /usr/local/etc/php-fpm.conf
 

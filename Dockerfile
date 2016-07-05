@@ -73,6 +73,8 @@ RUN phpcs --config-set ignore_warnings_on_exit 1 && \
     phpcs --config-set show_progress 1 && \
     phpcs --config-set default_standard PSR2
 RUN chmod +x /usr/local/bin/entrypoint.sh
+RUN addgroup superuser && \
+    echo '%superuser        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 VOLUME ["/tmp/composer/cache"]
