@@ -69,9 +69,9 @@ RUN bash -c "source /usr/local/bin/entrypoint.functions.sh && \
                             squizlabs/php_codesniffer:~2.5 \
                             robmorgan/phinx:~0.5.3 && \
     enableXDebug"
-RUN phpcs --config-set ignore_warnings_on_exit 1
-RUN phpcs --config-set show_progress 1
-RUN phpcs --config-set default_standard PSR2
+RUN phpcs --config-set ignore_warnings_on_exit 1 && \
+    phpcs --config-set show_progress 1 && \
+    phpcs --config-set default_standard PSR2
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
