@@ -1,9 +1,15 @@
 FROM php:7-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
+ENV COMPOSER_HOME=/usr/local/lib/composer/
+ENV COMPOSER_CACHE_DIR=/tmp/composer/cache/
+ENV COMPOSER_BIN_DIR=/usr/local/lib/composer/bin/
+ENV PATH=${PATH}:/usr/local/lib/composer/bin
+
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
         imagemagick \
+        libmagickwand-dev \
         openssh-client \
         sudo \
         git \
@@ -25,6 +31,9 @@ RUN cd /tmp/ && \
     curl -O https://pecl.php.net/get/mongodb-1.1.5.tgz && \
     tar zxvf mongodb-1.1.5.tgz && \
     mv mongodb-1.1.5 /usr/src/php/ext/mongodb && \
+    curl -O https://pecl.php.net/get/imagick-3.4.3RC1.tgz && \
+    tar zxvf imagick-3.4.3RC1.tgz &&
+    mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
     git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached && \
     cd /usr/src/php/ext/memcached && \
     git checkout php7 && \
@@ -36,6 +45,7 @@ RUN cd /tmp/ && \
 
 RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
 RUN docker-php-ext-install \
+    imagick \
     xdebug \
     gd \
     soap \
@@ -51,11 +61,6 @@ RUN docker-php-ext-install \
     memcached \
     redis \
     pcntl
-
-ENV COMPOSER_HOME=/usr/local/lib/composer/
-ENV COMPOSER_CACHE_DIR=/tmp/composer/cache/
-ENV COMPOSER_BIN_DIR=/usr/local/lib/composer/bin/
-ENV PATH=${PATH}:/usr/local/lib/composer/bin
 
 COPY templates/ /usr/local/templates/
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
