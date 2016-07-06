@@ -32,7 +32,7 @@ RUN cd /tmp/ && \
     tar zxvf mongodb-1.1.5.tgz && \
     mv mongodb-1.1.5 /usr/src/php/ext/mongodb && \
     curl -O https://pecl.php.net/get/imagick-3.4.3RC1.tgz && \
-    tar zxvf imagick-3.4.3RC1.tgz &&
+    tar zxvf imagick-3.4.3RC1.tgz && \
     mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
     git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached && \
     cd /usr/src/php/ext/memcached && \
