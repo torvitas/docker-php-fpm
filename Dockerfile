@@ -25,6 +25,7 @@ RUN apt-get update && \
 
 
 RUN cd /tmp/ && \
+    mkdir -p /usr/src/php/ext && \
     curl -O http://pecl.php.net/get/xdebug-2.4.0.tgz && \
     tar zxvf xdebug-2.4.0.tgz && \
     mv xdebug-2.4.0 /usr/src/php/ext/xdebug && \
@@ -40,14 +41,19 @@ RUN cd /tmp/ && \
     git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
     cd /usr/src/php/ext/redis && \
     git checkout php7 && \
+    echo 'xdebug' >> /usr/src/php-available-exts && \
+    echo 'mongodb' >> /usr/src/php-available-exts && \
+    echo 'imagick' >> /usr/src/php-available-exts && \
+    echo 'memcached' >> /usr/src/php-available-exts && \
+    echo 'redis' >> /usr/src/php-available-exts && \
     cd / && \
     rm -rf /tmp/*
 
-RUN docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir
-RUN docker-php-ext-install \
+RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd /var/www/html && \
+    docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
+    docker-php-ext-install \
     imagick \
     xdebug \
-    gd \
     soap \
     iconv \
     mcrypt \
@@ -60,7 +66,8 @@ RUN docker-php-ext-install \
     mongodb \
     memcached \
     redis \
-    pcntl
+    pcntl && \
+    rm -rf /usr/src/php*
 
 COPY templates/ /usr/local/templates/
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
