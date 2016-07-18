@@ -23,6 +23,23 @@ RUN apt-get update && \
         libxml2-dev && \
     rm -r /var/lib/apt/lists/*
 
+RUN cd /tmp/ && \
+    curl -O http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz && \
+    tar zxvf zend-loader-php5.6-linux-x86_64.tar.gz && \
+    cd zend-loader-php5.6-linux-x86_64/ && \
+    mkdir -p /usr/local/lib/php/extensions/ && \
+    cp * /usr/local/lib/php/extensions/ && \
+    touch /usr/local/etc/php/conf.d/zend_guard_loader.ini && \
+    echo 'zend_extension=/usr/local/lib/php/extensions/ZendGuardLoader.so' > /usr/local/etc/php/conf.d/zend_guard_loader.ini
+
+RUN cd /tmp/ && \
+    curl -O http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
+    tar zxvf ioncube_loaders_lin_x86-64.tar.gz && \
+    mkdir -p /usr/local/lib/php/extensions/ && \
+    cp ioncube/ioncube_loader_lin_5.6.so /usr/local/lib/php/extensions/ioncube.so && \
+    rm -rf ioncube && \
+    touch /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini && \
+    echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
 
 RUN cd /tmp/ && \
     mkdir -p /usr/src/php/ext && \
