@@ -1,4 +1,4 @@
-FROM php:7-fpm
+FROM php:5.6-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
 ENV COMPOSER_HOME=/usr/local/lib/composer/
@@ -37,10 +37,10 @@ RUN cd /tmp/ && \
     mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
     git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached && \
     cd /usr/src/php/ext/memcached && \
-    git checkout php7 && \
+    git checkout 2.2.0 && \
     git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
     cd /usr/src/php/ext/redis && \
-    git checkout php7 && \
+    git checkout 2.2.8 && \
     echo 'xdebug' >> /usr/src/php-available-exts && \
     echo 'mongodb' >> /usr/src/php-available-exts && \
     echo 'imagick' >> /usr/src/php-available-exts && \
@@ -60,6 +60,7 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     mbstring \
     pdo_mysql \
     mysqli \
+    mysql \
     zip \
     bcmath \
     opcache \
