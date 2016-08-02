@@ -19,7 +19,7 @@ access.log = /proc/self/fd/2
 user = ${WEB_USER}
 group = ${WEB_USER}
 
-listen = [::]:9000
+listen = 9000
 
 catch_workers_output = yes
 request_terminate_timeout = 300

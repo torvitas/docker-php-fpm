@@ -79,6 +79,7 @@ RUN cd /var/www/html && \
 COPY templates/ /usr/local/templates/
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
 COPY php/ /usr/local/etc/php/conf.d/
+RUN mkdir -p /usr/local/etc/php-fpm.d
 
 COPY bin/* /usr/local/bin/
 RUN bash -c "source /usr/local/bin/entrypoint.functions.sh && \
