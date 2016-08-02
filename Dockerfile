@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:5.4-fpm
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
 ENV COMPOSER_HOME=/usr/local/lib/composer/
@@ -24,22 +24,13 @@ RUN apt-get update && \
     rm -r /var/lib/apt/lists/*
 
 RUN cd /tmp/ && \
-    curl -O http://downloads.zend.com/guard/7.0.0/zend-loader-php5.6-linux-x86_64.tar.gz && \
-    tar zxvf zend-loader-php5.6-linux-x86_64.tar.gz && \
-    cd zend-loader-php5.6-linux-x86_64/ && \
+    curl -O http://downloads.zend.com/guard/6.0.0/ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz && \
+    tar zxvf ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64.tar.gz && \
+    cd ZendGuardLoader-70429-PHP-5.4-linux-glibc23-x86_64/php-5.4.x/ && \
     mkdir -p /usr/local/lib/php/extensions/ && \
     cp * /usr/local/lib/php/extensions/ && \
     touch /usr/local/etc/php/conf.d/zend_guard_loader.ini && \
     echo 'zend_extension=/usr/local/lib/php/extensions/ZendGuardLoader.so' > /usr/local/etc/php/conf.d/zend_guard_loader.ini
-
-RUN cd /tmp/ && \
-    curl -O http://downloads3.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
-    tar zxvf ioncube_loaders_lin_x86-64.tar.gz && \
-    mkdir -p /usr/local/lib/php/extensions/ && \
-    cp ioncube/ioncube_loader_lin_5.6.so /usr/local/lib/php/extensions/ioncube.so && \
-    rm -rf ioncube && \
-    touch /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini && \
-    echo 'zend_extension=/usr/local/lib/php/extensions/ioncube.so' > /usr/local/etc/php/conf.d/aaa_ext-ioncube.ini
 
 RUN cd /tmp/ && \
     mkdir -p /usr/src/php/ext && \
@@ -66,7 +57,7 @@ RUN cd /tmp/ && \
     cd / && \
     rm -rf /tmp/*
 
-RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd /var/www/html && \
+RUN cd /var/www/html && \
     docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
     docker-php-ext-install \
     imagick \
@@ -80,12 +71,10 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     mysql \
     zip \
     bcmath \
-    opcache \
     mongodb \
     memcached \
     redis \
-    pcntl && \
-    rm -rf /usr/src/php*
+    pcntl
 
 COPY templates/ /usr/local/templates/
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
