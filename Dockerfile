@@ -52,6 +52,7 @@ RUN cd /tmp/ && \
 RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd /var/www/html && \
     docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
     docker-php-ext-install \
+    gd \
     imagick \
     xdebug \
     soap \
