@@ -90,10 +90,6 @@ RUN addgroup superuser && \
 VOLUME ["/tmp/composer/cache"]
 CMD ["php-fpm"]
 
-COPY templates/ /usr/local/templates/
-COPY fpm/ /usr/local/etc/php/fpm/pool.d/
-COPY php/ /usr/local/etc/php/conf.d/
-
 ENTRYPOINT ["bash", "-i", "/usr/local/bin/entrypoint.sh"]
-COPY bin/* /usr/local/bin/
+COPY src/ /usr/local/
 RUN chmod +x /usr/local/bin/entrypoint.sh
