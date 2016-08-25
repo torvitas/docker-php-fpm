@@ -60,6 +60,7 @@ RUN cd /tmp/ && \
 RUN cd /var/www/html && \
     docker-php-ext-configure gd --with-jpeg-dir --with-png-dir --with-freetype-dir && \
     docker-php-ext-install \
+    gd \
     imagick \
     xdebug \
     soap \
