@@ -72,7 +72,7 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
     composer global require codeception/codeception:~2.1 \
                             squizlabs/php_codesniffer:~2.5 \
-                            robmorgan/phinx:~0.5.3 && \
+                            robmorgan/phinx:~0.6 && \
     phpcs --config-set ignore_warnings_on_exit 1 && \
     phpcs --config-set show_progress 1 && \
     phpcs --config-set default_standard PSR2
