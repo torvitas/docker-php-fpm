@@ -69,25 +69,24 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     pcntl && \
     rm -rf /usr/src/php*
 
+RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
+    composer global require codeception/codeception:~2.1 \
+                            squizlabs/php_codesniffer:~2.5 \
+                            robmorgan/phinx:~0.5.3 && \
+    phpcs --config-set ignore_warnings_on_exit 1 && \
+    phpcs --config-set show_progress 1 && \
+    phpcs --config-set default_standard PSR2
+
+RUN addgroup superuser && \
+    echo '%superuser        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
+
+VOLUME ["/tmp/composer/cache"]
+CMD ["php-fpm"]
+
 COPY templates/ /usr/local/templates/
 COPY fpm/ /usr/local/etc/php/fpm/pool.d/
 COPY php/ /usr/local/etc/php/conf.d/
 
+ENTRYPOINT ["bash", "-i", "/usr/local/bin/entrypoint.sh"]
 COPY bin/* /usr/local/bin/
-RUN bash -c "source /usr/local/bin/entrypoint.functions.sh && \
-    curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    disableXDebug && \
-    composer global require codeception/codeception:~2.1 \
-                            squizlabs/php_codesniffer:~2.5 \
-                            robmorgan/phinx:~0.5.3 && \
-    enableXDebug"
-RUN phpcs --config-set ignore_warnings_on_exit 1 && \
-    phpcs --config-set show_progress 1 && \
-    phpcs --config-set default_standard PSR2
 RUN chmod +x /usr/local/bin/entrypoint.sh
-RUN addgroup superuser && \
-    echo '%superuser        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-VOLUME ["/tmp/composer/cache"]
-CMD ["php-fpm"]
