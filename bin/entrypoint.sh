@@ -53,4 +53,4 @@ case ${1} in
         php-fpm
 esac
 
-su ${WEB_USER} -c "${cmd}"
+HOME="/home/${WEB_USER}" sudo -u ${WEB_USER} -E -- ${cmd}
