@@ -31,6 +31,13 @@ if [ -f /usr/local/bin/entrypoint.d/*.sh ]; then
 fi
 
 case ${1} in
+    composer)
+        set -e
+        disableXDebug
+        su ${WEB_USER} -pc "composer ${@:2}"
+        enableXDebug
+        exit 0
+        ;;
     composer:create)
         set -e
         composerCreate
