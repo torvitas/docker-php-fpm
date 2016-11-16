@@ -3,6 +3,7 @@ MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
 RUN apk update && \
     apk add \
+        bash \
         imagemagick \
         imagemagick-dev \
         openssh-client \
@@ -64,7 +65,7 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     pcntl && \
     rm -rf /usr/src/php*
 
-RUN addgroup superuser && \
+RUN addgroup -g 666 superuser && \
     echo '%superuser        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 
 CMD ["php-fpm"]
