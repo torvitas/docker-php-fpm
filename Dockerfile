@@ -1,22 +1,21 @@
 FROM php:7-fpm-alpine
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
 
-RUN apt-get update && \
-    apt-get install --no-install-recommends -y \
+RUN apk update && \
+    apk add \
         imagemagick \
-        libmagickwand-dev \
+        imagemagick-dev \
         openssh-client \
         sudo \
         git \
         libmemcached-dev \
-        libssl-dev \
-        libpng12-dev \
-        libjpeg-dev \
+        openssl-dev \
+        libpng-dev \
+        jpeg-dev \
         re2c \
-        libfreetype6-dev \
+        freetype-dev \
         libmcrypt-dev \
-        libxml2-dev && \
-    rm -r /var/lib/apt/lists/*
+        libxml2-dev
 
 
 RUN cd /tmp/ && \
