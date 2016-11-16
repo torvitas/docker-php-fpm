@@ -1,10 +1,5 @@
-FROM php:7-fpm
+FROM php:7-fpm-alpine
 MAINTAINER Sascha Marcel Schmidt <docker@saschaschmidt.net>
-
-ENV COMPOSER_HOME=/usr/local/lib/composer/
-ENV COMPOSER_CACHE_DIR=/tmp/composer/cache/
-ENV COMPOSER_BIN_DIR=/usr/local/lib/composer/bin/
-ENV PATH=${PATH}:/usr/local/lib/composer/bin
 
 RUN apt-get update && \
     apt-get install --no-install-recommends -y \
@@ -70,18 +65,9 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     pcntl && \
     rm -rf /usr/src/php*
 
-RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer && \
-    composer global require codeception/codeception:~2.1 \
-                            squizlabs/php_codesniffer:~2.5 \
-                            robmorgan/phinx:~0.6 && \
-    phpcs --config-set ignore_warnings_on_exit 1 && \
-    phpcs --config-set show_progress 1 && \
-    phpcs --config-set default_standard PSR2
-
 RUN addgroup superuser && \
     echo '%superuser        ALL=(ALL)       NOPASSWD: ALL' >> /etc/sudoers
 
-VOLUME ["/tmp/composer/cache"]
 CMD ["php-fpm"]
 
 ENTRYPOINT ["bash", "-i", "/usr/local/bin/entrypoint.sh"]
