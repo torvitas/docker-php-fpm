@@ -1,17 +1,5 @@
 #!/bin/bash
 
-function generateSshKeyIfMissing()
-{
-    mkdir -p /home/${WEB_USER}/.ssh
-    chmod 700 -R /home/${WEB_USER}/.ssh
-    chown ${WEB_USER}.${WEB_USER} -R /home/${WEB_USER}/.ssh
-    su ${WEB_USER} -c '
-        if [ ! -f ~/.ssh/id_rsa ]; then
-          ssh-keygen -b 2048 -t rsa -f ~/.ssh/id_rsa -q -N ""
-        fi
-    '
-}
-
 function composerCreate()
 {
     disableXDebug

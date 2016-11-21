@@ -24,8 +24,6 @@ setComposerPermission
 
 mkdir /usr/local/lib/php/session && chown ${WEB_USER}.${WEB_USER} /usr/local/lib/php/session
 
-
-generateSshKeyIfMissing
 if [ -f /usr/local/bin/entrypoint.d/*.sh ]; then
     source /usr/local/bin/entrypoint.d/*.sh
 fi
