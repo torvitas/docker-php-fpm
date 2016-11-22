@@ -12,6 +12,7 @@ cmd=${@}
 export WEB_USER_UID=${WEB_USER_UID:-"1000"}
 export WEB_USER=${WEB_USER:-"web"}
 export WEB_ROOT=${WEB_ROOT:-/var/www/html}
+export SSH_AUTH_SOCK;
 useradd ${WEB_USER} -mu ${WEB_USER_UID}  > /dev/null 2>&1
 chown -R ${WEB_USER}.${WEB_USER} /home/${WEB_USER}
 gpasswd -a ${WEB_USER} superuser
