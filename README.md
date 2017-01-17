@@ -3,7 +3,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/torvitas/php-fpm.svg?maxAge=2592000)]()
 
 ## Available (supported) tags
-5.4, 5.5, 5.6 (latest), 7
+5.4, 5.5, 5.6 (latest), 7, 7.0-alpine, 7.1-alpine
 
 ## Quickstart
 
