@@ -10,23 +10,27 @@ RUN apk update && \
         sudo \
         git \
         libmemcached-dev \
+        openssl \
         openssl-dev \
         libpng-dev \
         jpeg-dev \
         re2c \
         freetype-dev \
         libmcrypt-dev \
-        libxml2-dev
+        libxml2-dev \
+        cyrus-sasl-dev \
+        libmemcached-dev \
+        libtool
 
 
 RUN cd /tmp/ && \
     mkdir -p /usr/src/php/ext && \
-    curl -O http://pecl.php.net/get/xdebug-2.4.0.tgz && \
-    tar zxvf xdebug-2.4.0.tgz && \
-    mv xdebug-2.4.0 /usr/src/php/ext/xdebug && \
-    curl -O https://pecl.php.net/get/mongodb-1.1.5.tgz && \
-    tar zxvf mongodb-1.1.5.tgz && \
-    mv mongodb-1.1.5 /usr/src/php/ext/mongodb && \
+    curl -O http://pecl.php.net/get/xdebug-2.5.0.tgz && \
+    tar zxvf xdebug-2.5.0.tgz && \
+    mv xdebug-2.5.0 /usr/src/php/ext/xdebug && \
+    curl -O https://pecl.php.net/get/mongodb-1.2.2.tgz && \
+    tar zxvf mongodb-1.2.2.tgz && \
+    mv mongodb-1.2.2 /usr/src/php/ext/mongodb && \
     curl -O https://pecl.php.net/get/imagick-3.4.3RC1.tgz && \
     tar zxvf imagick-3.4.3RC1.tgz && \
     mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
