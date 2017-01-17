@@ -10,6 +10,7 @@ RUN apk update && \
         sudo \
         git \
         libmemcached-dev \
+        openssl \
         openssl-dev \
         libpng-dev \
         jpeg-dev \
