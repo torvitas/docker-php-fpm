@@ -35,12 +35,12 @@ RUN cd /tmp/ && \
     curl -O https://pecl.php.net/get/imagick-3.4.3RC1.tgz && \
     tar zxvf imagick-3.4.3RC1.tgz && \
     mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
-    git clone https://github.com/php-memcached-dev/php-memcached.git /usr/src/php/ext/memcached && \
-    cd /usr/src/php/ext/memcached && \
-    git checkout php7 && \
-    git clone https://github.com/phpredis/phpredis.git /usr/src/php/ext/redis && \
-    cd /usr/src/php/ext/redis && \
-    git checkout php7 && \
+    curl -LO https://github.com/php-memcached-dev/php-memcached/archive/v3.0.1.tar.gz && \
+    tar zxvf v3.0.1.tar.gz && \
+    mv php-memcached-3.0.1 /usr/src/php/ext/memcached && \
+    curl -O https://pecl.php.net/get/redis-3.1.1.tgz && \
+    tar zxvf redis-3.1.1.tgz && \
+    mv redis-3.1.1 /usr/src/php/ext/redis && \
     echo 'xdebug' >> /usr/src/php-available-exts && \
     echo 'mongodb' >> /usr/src/php-available-exts && \
     echo 'imagick' >> /usr/src/php-available-exts && \
