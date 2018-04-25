@@ -25,21 +25,25 @@ RUN apk update && \
 
 RUN cd /tmp/ && \
     mkdir -p /usr/src/php/ext && \
-    curl -O http://pecl.php.net/get/xdebug-2.5.0.tgz && \
-    tar zxvf xdebug-2.5.0.tgz && \
-    mv xdebug-2.5.0 /usr/src/php/ext/xdebug && \
+    curl -O http://pecl.php.net/get/apcu-5.1.11.tgz && \
+    tar zxvf apcu-5.1.11.tgz && \
+    mv apcu-5.1.11 /usr/src/php/ext/apcu && \
+    curl -O http://pecl.php.net/get/xdebug-2.5.5.tgz && \
+    tar zxvf xdebug-2.5.5.tgz && \
+    mv xdebug-2.5.5 /usr/src/php/ext/xdebug && \
     curl -O https://pecl.php.net/get/mongodb-1.2.2.tgz && \
     tar zxvf mongodb-1.2.2.tgz && \
     mv mongodb-1.2.2 /usr/src/php/ext/mongodb && \
-    curl -O https://pecl.php.net/get/imagick-3.4.3RC1.tgz && \
-    tar zxvf imagick-3.4.3RC1.tgz && \
-    mv imagick-3.4.3RC1 /usr/src/php/ext/imagick && \
-    curl -LO https://github.com/php-memcached-dev/php-memcached/archive/v3.0.1.tar.gz && \
-    tar zxvf v3.0.1.tar.gz && \
-    mv php-memcached-3.0.1 /usr/src/php/ext/memcached && \
+    curl -O https://pecl.php.net/get/imagick-3.4.3.tgz && \
+    tar zxvf imagick-3.4.3.tgz && \
+    mv imagick-3.4.3 /usr/src/php/ext/imagick && \
+    curl -LO https://github.com/php-memcached-dev/php-memcached/archive/v3.0.4.tar.gz && \
+    tar zxvf v3.0.4.tar.gz && \
+    mv php-memcached-3.0.4 /usr/src/php/ext/memcached && \
     curl -O https://pecl.php.net/get/redis-3.1.1.tgz && \
     tar zxvf redis-3.1.1.tgz && \
     mv redis-3.1.1 /usr/src/php/ext/redis && \
+    echo 'apcu' >> /usr/src/php-available-exts && \
     echo 'xdebug' >> /usr/src/php-available-exts && \
     echo 'mongodb' >> /usr/src/php-available-exts && \
     echo 'imagick' >> /usr/src/php-available-exts && \
@@ -53,6 +57,7 @@ RUN cd /usr/src/ && tar -xf php.tar.xz && cp -rf php-${PHP_VERSION}/* php && cd 
     docker-php-ext-install \
     gd \
     imagick \
+    apcu \
     xdebug \
     soap \
     iconv \
